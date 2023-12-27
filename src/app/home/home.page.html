@@ -1,20 +1,81 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="false"  style="box-shadow: none;">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Sake Musik
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button  mode="ios" (click)="trash()" >
+        <ion-icon slot="end" name="trash-outline" ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar mode="ios"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Sake Musik</ion-title>
     </ion-toolbar>
   </ion-header>
+<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher>
+<ion-modal [isOpen]="is_open" trigger="open-modal" (willDismiss)="onWillDismiss($event)"  [initialBreakpoint]="0.75" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-title>Welcome</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      
+    </ion-content>
+  </ng-template>
+</ion-modal>
+<ion-card  *ngFor="let card of cards"  id="open-modal" expand="block" (click)="open()"  style="margin-top: 10px;margin-bottom: 10px;" mode="ios" class="ion-no-padding">
+  <ion-card-content class="ion-no-padding" >
+    <ion-item lines="none" mode="ios">
+      <ion-avatar slot="start" >
+        <ion-img src="./assets/fashion.jpg" ></ion-img>
+      </ion-avatar>
+      <ion-label>Label
+      <p>Bourgeois</p>
+    </ion-label>
+    <ion-chip color="primary" mode="ios" >
+      22:35
+    </ion-chip>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<div *ngIf="loading">
+    <ion-card  *ngFor="let card of [1,1,1,1,1,1,1,1,1,1]"  style="margin-top: 10px;margin-bottom: 10px;" mode="ios" class="ion-no-padding">
+      <ion-card-content class="ion-no-padding">
+        <ion-item lines="none" mode="ios">
+          <ion-avatar  slot="start">
+            <ion-skeleton-text></ion-skeleton-text>
+          </ion-avatar>
+          <ion-label>
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+            <p>
+              <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            </p>
+          </ion-label>
+          <ion-chip color="primary" mode="ios">
+            <ion-skeleton-text animated style="width: 50px"></ion-skeleton-text>
+          </ion-chip>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+</div>
 </ion-content>
