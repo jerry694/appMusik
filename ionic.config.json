@@ -1,0 +1,7 @@
+{
+  "name": "sakeMusik",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
