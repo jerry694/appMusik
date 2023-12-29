@@ -61,26 +61,18 @@ ion-modal ion-toolbar {
       opacity: 1;
       transition: opacity 0.3s ease;
     z-index: 0;}
-    .artistPhoto{
-      
-      position: relative;
-      top: -15vw;
-      left: 10vw;
-      width: 25vw;
-      height: 25vw;
-      background-color: aqua;
-      border-radius: 100%;
-      img {
-        width: 100%; // Ajustez la largeur de l'image en fonction de vos besoins
-        height: 100%;
-        
-      border-radius: 100%;
-      
+.lyrics{
+  pre{
+    width: 95vw;
+    height: auto;
+  }
+}
     
-      }
+    ion-modal ion-button{
+      font-size: 25px;
     }
     ion-content ion-button {
-      font-size: 10vw;
+      font-size: 25px;
       position:absolute;
       right: 5vw;
       top: -20vw;

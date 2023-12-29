@@ -1,16 +1,17 @@
-<ion-header [translucent]="false"  style="box-shadow: none;">
+<ion-header [translucent]="false" style="box-shadow: none;">
   <ion-toolbar>
     <ion-title>
       Sake Musik
     </ion-title>
-    <ion-buttons slot="end">
-      <ion-button  mode="ios" (click)="trash()" >
-        <ion-icon slot="end" name="trash-outline" ></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)" mode="ios"></ion-searchbar>
+
+    <ion-buttons slot="end">
+      <ion-button mode="ios" (click)="trash()">
+        <ion-icon slot="end" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -20,62 +21,70 @@
       <ion-title size="large">Sake Musik</ion-title>
     </ion-toolbar>
   </ion-header>
-<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
-  <ion-refresher-content></ion-refresher-content>
-</ion-refresher>
-<ion-modal [isOpen]="is_open" trigger="open-modal" (willDismiss)="onWillDismiss($event)"  [initialBreakpoint]="0.55" [breakpoints]="[0, 0.25, 0.5, 0.75]">
-  <ng-template>
-    <ion-header style="background-color: rgba(255, 153, 0, 0);box-shadow: none;">
-      <ion-toolbar style="text-align: center;">
-        <ion-buttons slot="start">
-          <ion-button (click)="cancel()">Cancel</ion-button>
-        </ion-buttons>
-        <ion-title>Welcome</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-no-padding">
-      <div class="pochette">
-        <img src="./assets/fashion.jpg"  alt="pochette">
-        <div class="overlay">
-        </div>
-        <ion-buttons >
-          <ion-button >
-            <ion-icon  name="play"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-        <div class="artistPhoto">
-        <img src="./assets/fashion.jpg"  alt="pochette">
-        </div>
-        
-      </div>
-    </ion-content>
-  </ng-template>
-</ion-modal>
-<!-- (click)="open()" id="open-modal" expand="block"  -->
-<ion-card  *ngFor="let card of cards"  [routerLink]="['musique-details',card.id]"  style="margin-top: 10px;margin-bottom: 10px;" mode="ios" class="ion-no-padding">
-  <ion-card-content class="ion-no-padding" >
-    <ion-item lines="none" mode="ios">
-      <ion-avatar slot="start" >
-        <ion-img [src]="card.pochetteAlbum" ></ion-img>
-      </ion-avatar>
-      <ion-label>{{card.titreChanson}}
-      <p>{{card.nomArtiste}}</p>
-    </ion-label>
-    <ion-chip color="warning" mode="ios" style="padding: 0px;padding-right: 8px;text-align: center;">
-      <ion-icon name="chevron-forward-outline" class="ion-no-padding" color="warning" mode="ios"></ion-icon>
-    </ion-chip>
-    </ion-item>
-  </ion-card-content>
-</ion-card>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-modal [isOpen]="is_open" trigger="open-modal" (willDismiss)="onWillDismiss($event)" [initialBreakpoint]="0.65"
+    [breakpoints]="[0, 0.25, 0.5, 0.75,1]">
+    <ng-template>
+      <ion-header style="background-color: rgba(255, 153, 0, 0);box-shadow: none;">
+        <ion-toolbar style="text-align: center;">
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()"><ion-icon name="chevron-down-outline"></ion-icon></ion-button>
+          </ion-buttons>
+          <ion-title style="font-family: 'fanlste';">{{song.titreChanson}}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true"><ion-icon color="warning"
+                name="card-outline"></ion-icon></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-no-padding">
+        <div class="pochette">
+          <ion-img [src]="song?.pochetteAlbum" [alt]="song?.pochetteAlbum"></ion-img>
+          <div class="overlay">
+          </div>
+          <ion-buttons (click)="action()">
+            <ion-button>
+              <ion-icon color="warning" [name]="button"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <div class="lyrics ion-padding" style="text-align: center;">
+            <ion-title style="font-family: 'fanlste'; font-size: 40px">Lyrics</ion-title>
 
-<div *ngIf="loading">
-    <ion-card  *ngFor="let card of [1,1,1,1,1,1,1,1,1,1]"  style="margin-top: 10px;margin-bottom: 10px;" mode="ios" class="ion-no-padding">
+            <pre>{{ song.lyrics }}</pre>
+
+          </div>
+
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <!-- [routerLink]="['musique-details',card.id]" -->
+
+  <ion-card *ngFor="let card of cards" (click)="open(card.id)" id="open-modal" expand="block"
+    style="margin-top: 10px;margin-bottom: 10px;" mode="ios" class="ion-no-padding">
+    <ion-card-content class="ion-no-padding">
+      <ion-item lines="none" mode="ios">
+        <ion-avatar slot="start">
+          <ion-img [src]="card.pochetteAlbum"></ion-img>
+        </ion-avatar>
+        <ion-label>{{card.titreChanson}}
+          <p>{{card.nomArtiste}}</p>
+        </ion-label>
+        <ion-chip color="warning" mode="ios" style="padding: 0px;padding-right: 8px;text-align: center;">
+          <ion-icon name="chevron-forward-outline" class="ion-no-padding" color="warning" mode="ios"></ion-icon>
+        </ion-chip>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="loading">
+    <ion-card *ngFor="let card of [1,1,1,1,1,1,1,1,1,1]" style="margin-top: 10px;margin-bottom: 10px;" mode="ios"
+      class="ion-no-padding">
       <ion-card-content class="ion-no-padding">
         <ion-item lines="none" mode="ios">
-          <ion-avatar  slot="start">
+          <ion-avatar slot="start">
             <ion-skeleton-text></ion-skeleton-text>
           </ion-avatar>
           <ion-label>
@@ -91,5 +100,5 @@
       </ion-card-content>
     </ion-card>
 
-</div>
+  </div>
 </ion-content>

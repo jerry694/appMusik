@@ -12,10 +12,21 @@ import {NativeAudio} from '@capacitor-community/native-audio'
 export class MusiqueDetailsPage implements OnInit {
 song:any={}
 button= 'play'
+resume=false
   constructor(private chansonS:ChansonsService,private router:ActivatedRoute) {}
   ngOnInit(): void {
     this.loadOneChanson()
-  }
+    // this.other()
+  } 
+other(){
+  
+  const audio = new Audio('./assets/sounds/NYXIA.mp3');
+  audio.addEventListener('loadedmetadata', () => {
+    const duration = audio.duration;
+    console.log('Durée de la piste audio:', duration);
+  });
+  audio.load();
+}
 
   loadOneChanson(){
     this.chansonS.oneChanson(this.router.snapshot.params['id']).subscribe((data:any)=>{
@@ -31,16 +42,22 @@ button= 'play'
       audioChannelNum: 1, 
       isUrl: false  //Si oui ou non le chemin du fichier est une URL
    });
-   
+
   }
   action(){
     if(this.button=='play'){
+      if(this.resume){
+        this.resumeS()
+      }
+      else{
       this.play()
+      }
       this.button='pause'
     }
     else{
       this.stop()
       this.button='play'
+      this.resume=true
     }
   }
 play(){
@@ -58,10 +75,23 @@ play(){
   NativeAudio.stop({ 
     assetId: this.song.titreChanson, 
  });
+ console.log(
+    
+  NativeAudio.getCurrentTime({assetId: this.song.titreChanson,})
+     )
  }
  unload(){
   NativeAudio.unload({ 
     assetId: this.song.titreChanson, //Identifiant unique du fichier
+ });
+ this.resume=false
+ }
+ resumeS(){
+  console.log(NativeAudio.resume({ 
+    assetId: this.song.titreChanson,
+ }))
+  NativeAudio.resume({ 
+    assetId: this.song.titreChanson,
  });
  
  }
