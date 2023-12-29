@@ -1,32 +1,41 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { ChansonsService } from 'src/services/chansons.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal ;
 
-  cards=[1,1,1,1,1,1,1,1,1,1]
+  cards:any=[]
+  cardsSave:any=[]
   loading=false
   name!: string;
   is_open=false
-  constructor() {}
+  constructor(private chansonS:ChansonsService) {}
+  ngOnInit(): void {
+    this.loadListChansons()
+  }
+  loadListChansons(){
+    this.chansonS.listofchansons().subscribe((data)=>{
+      console.log(data.data)
+      this.cards=data.data
+      this.cardsSave=data.data
+    })
+  }
   trash(){
     this.cards=[]
     this.loading=true
   }
   doRefresh(event: any): void {
     this.trash()
-    setTimeout(() => {
-      this.cards=[1,1,1,1,1,1,1,1,1,1]
+      this.loadListChansons()
       this.loading=false
-      event.detail.complete();
-    }, 2000);
-  }
+      event.detail.complete();}
 
 open(){
   
@@ -49,4 +58,16 @@ open(){
       alert("hello");
     }
   }
+  public results: any[] = [...this.cards];
+
+  handleInput(event: any) {
+    console.log( event.target.value.toLowerCase())
+    const query = event.target.value.toLowerCase();
+    this.cards = this.cardsSave.filter((chanson: any) =>
+    chanson.titreChanson.toLowerCase().includes(query) ||
+    chanson.nomArtiste.toLowerCase().includes(query)
+  );
+  }
+  
+  
 }

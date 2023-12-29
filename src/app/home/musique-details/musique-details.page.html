@@ -1,0 +1,35 @@
+<ion-header [translucent]="true" style="box-shadow: none;">
+  <ion-toolbar style="text-align: center;">
+    <ion-buttons slot="start">
+      <ion-back-button (click)="unload()" style="color: white; " icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="color: white;">{{song.titreChanson}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <div class="pochette">
+    <ion-img [src]="song?.pochetteAlbum" [alt]="song?.pochetteAlbum"></ion-img>
+    <div class="overlay">
+      <div class="title">
+        <h1>{{song?.nomArtiste}}</h1>
+        <!-- <h4> {{song.score}} </h4> -->
+      </div>
+
+    </div>
+
+  </div>
+  <div class="option" style="width: 100%; display: flex ; justify-content: space-around;">
+    <div class="play" style=" width: 80px;height: 80px;">
+      <ion-icon [name]="button" (click)="action()"></ion-icon>
+
+    </div>
+    <div class="shop" style=" width: 80px;height: 80px;">
+      <ion-icon name="cash-outline"></ion-icon>
+
+    </div>
+  </div>
+
+  <!-- <img src="../../../../assets/img/Benskin.jpg" alt=""> -->
+</ion-content>

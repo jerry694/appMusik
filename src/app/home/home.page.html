@@ -10,7 +10,7 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar mode="ios"></ion-searchbar>
+    <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)" mode="ios"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -54,17 +54,18 @@
     </ion-content>
   </ng-template>
 </ion-modal>
-<ion-card  *ngFor="let card of cards"  id="open-modal" expand="block" (click)="open()"  style="margin-top: 10px;margin-bottom: 10px;" mode="ios" class="ion-no-padding">
+<!-- (click)="open()" id="open-modal" expand="block"  -->
+<ion-card  *ngFor="let card of cards"  [routerLink]="['musique-details',card.id]"  style="margin-top: 10px;margin-bottom: 10px;" mode="ios" class="ion-no-padding">
   <ion-card-content class="ion-no-padding" >
     <ion-item lines="none" mode="ios">
       <ion-avatar slot="start" >
-        <ion-img src="./assets/fashion.jpg" ></ion-img>
+        <ion-img [src]="card.pochetteAlbum" ></ion-img>
       </ion-avatar>
-      <ion-label>Label
-      <p>Bourgeois</p>
+      <ion-label>{{card.titreChanson}}
+      <p>{{card.nomArtiste}}</p>
     </ion-label>
-    <ion-chip color="primary" mode="ios" >
-      22:35
+    <ion-chip color="warning" mode="ios" style="padding: 0px;padding-right: 8px;text-align: center;">
+      <ion-icon name="chevron-forward-outline" class="ion-no-padding" color="warning" mode="ios"></ion-icon>
     </ion-chip>
     </ion-item>
   </ion-card-content>
@@ -83,7 +84,7 @@
               <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
             </p>
           </ion-label>
-          <ion-chip color="primary" mode="ios">
+          <ion-chip color="warning" mode="ios">
             <ion-skeleton-text animated style="width: 50px"></ion-skeleton-text>
           </ion-chip>
         </ion-item>
