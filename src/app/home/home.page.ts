@@ -15,7 +15,7 @@ export class HomePage implements OnInit {
   cards:any=[]
   cardsSave:any=[]
   song:any={}
-  loading=false
+  loading=true
   name!: string;
   is_open=false
   button= 'play'
@@ -29,6 +29,7 @@ export class HomePage implements OnInit {
       console.log(data.data)
       this.cards=data.data
       this.cardsSave=data.data
+      this.loading=false
     })
   }
   loadOneChanson(id:number){
