@@ -40,7 +40,7 @@ other(){
       assetId: this.song.titreChanson,  //Identifiant unique du fichier
       assetPath: this.song.chansonUrl,  //chemin relatif ou absolue (file://)
       audioChannelNum: 1, 
-      isUrl: false  //Si oui ou non le chemin du fichier est une URL
+      isUrl: true  //Si oui ou non le chemin du fichier est une URL
    });
 
   }
