@@ -44,9 +44,9 @@ export class HomePage implements OnInit {
     this.loading=true
   }
   doRefresh(event: any): void {
-    this.trash()
+      this.trash()
+      this.loading=true
       this.loadListChansons()
-      this.loading=false
       event.detail.complete();}
 
 open(id:number){
