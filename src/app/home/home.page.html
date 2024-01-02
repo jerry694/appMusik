@@ -66,8 +66,8 @@
     {{err}}
   </p>
   <!-- [routerLink]="['musique-details',card.id]" -->
-<!-- id="open-modal" expand="block" -->
-  <ion-card *ngFor="let card of cards; let i=index"  
+<!--  -->
+  <ion-card *ngFor="let card of cards; let i=index"  id="open-modal" expand="block"
     style="margin-top: 10px;margin-bottom: 10px;" mode="ios" class="ion-no-padding" (click)="open(card.id)">
     <ion-card-content class="ion-no-padding">
       <ion-item lines="none" mode="ios">
