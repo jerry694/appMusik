@@ -50,17 +50,17 @@
   
     }
   }    
-      .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vw;
-        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.849));
-        color: white;
-        opacity: 1;
-        transition: opacity 0.3s ease;
-      z-index: 0;}
+      // .overlay {
+      //   position: absolute;
+      //   top: 0;
+      //   left: 0;
+      //   width: 100vw;
+      //   height: 100vw;
+      //   background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.849));
+      //   color: white;
+      //   opacity: 1;
+      //   transition: opacity 0.3s ease;
+      // z-index: 0;}
   .lyrics{
     pre{
       width: 95vw;
