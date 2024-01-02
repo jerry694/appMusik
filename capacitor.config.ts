@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'sakeMusik',
   webDir: 'www',
   server: {
-    androidScheme: 'http',
+    androidScheme: 'https',
     cleartext:true
   }
 };
