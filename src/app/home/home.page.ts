@@ -21,8 +21,9 @@ export class HomePage implements OnInit {
   button = 'play'
   resume = false
   err!: string
-  specificIndex:number=-1
-  musiqueCours:string=''
+  specificIndex: number = -1
+  musiqueCours: string = ''
+  first: boolean = true
 
   constructor(private chansonS: ChansonsService) { }
   ngOnInit(): void {
@@ -31,16 +32,23 @@ export class HomePage implements OnInit {
 
   load(card: string) {
     this.song = card
-    this.unload()
-    this.preload()
-    this.action()
+    if (!this.first) {
+      this.unload()
+      this.preload()
+      this.action()
+    }
+    else {
+      this.preload()
+      this.action()
+      this.first = false
+    }
     console.log(this.song)
   }
   loadListChansons() {
     this.chansonS.listofchansons().subscribe((data) => {
       console.log(data.data)
       this.cards = data.data
-      // alert(data.data)
+      alert(data.data)
       this.cardsSave = data.data
       this.loading = false
       this.err = ''
@@ -92,7 +100,7 @@ export class HomePage implements OnInit {
     //   alert("hello");
     // }
   }
-  public results: any[] = [...this.cards] ;
+  public results: any[] = [...this.cards];
 
   handleInput(event: any) {
     console.log(event.target.value.toLowerCase())
@@ -109,7 +117,17 @@ export class HomePage implements OnInit {
       audioChannelNum: 1,
       isUrl: true  //Si oui ou non le chemin du fichier est une URL
     });
-this.musiqueCours=this.song.titreChanson
+    this.setVolume()
+    console.log(this.setVolume())
+    this.musiqueCours = this.song.titreChanson
+  }
+  setVolume() {
+    NativeAudio.setVolume(
+      {
+        assetId: this.song.titreChanson,
+        volume: 1
+      }
+    )
   }
   action() {
     if (this.button == 'play') {
@@ -144,9 +162,11 @@ this.musiqueCours=this.song.titreChanson
       assetId: this.song.titreChanson,
     });
     console.log(NativeAudio.getCurrentTime({ assetId: this.song.titreChanson, }))
+
+    this.first = true
     this.unload()
 
-    this.specificIndex=-1
+    this.specificIndex = -1
     this.button = 'play'
   }
   unload() {
@@ -167,14 +187,14 @@ this.musiqueCours=this.song.titreChanson
     //  this.unload()
 
   }
-  chipClicked(event: Event, card: any,index:number) {
+  chipClicked(event: Event, card: any, index: number) {
     event.stopPropagation();
-    if(index==this.specificIndex){
+    if (index == this.specificIndex) {
       this.stop()
     }
-    else{ // Empêche la propagation de l'événement
+    else { // Empêche la propagation de l'événement
       this.load(card);
-      this.specificIndex=index
+      this.specificIndex = index
     }
   }
 }
