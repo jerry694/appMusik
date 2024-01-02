@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ChansonsService {
-  url = 'http://localhost:3000/chansons'
+  url = 'http://192.168.100.13:3000/chansons'
   constructor(private http: HttpClient) { }
 
   listofchansons(): Observable<any> {
