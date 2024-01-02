@@ -6,13 +6,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ChansonsService {
-url='http://localhost:3000/chansons'
-  constructor(private http:HttpClient) { }
+  url = 'http://localhost:3000/chansons'
+  constructor(private http: HttpClient) { }
 
-  listofchansons():Observable<any>{
+  listofchansons(): Observable<any> {
     return this.http.get(this.url)
   }
-  oneChanson(id:number):Observable<any>{
-    return this.http.get(this.url+"/one/"+id)
+  oneChanson(id: number): Observable<any> {
+    return this.http.get(this.url + "/one/" + id)
   }
 }
